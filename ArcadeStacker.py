@@ -2,26 +2,23 @@ import curses
 from curses import wrapper
 import time
 import keyboard
-from numpy import std
 
 def main(stdscr):
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
     REDSQUARE = curses.color_pair(1)
-
     curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_BLACK)
     BLACKSQUARE = curses.color_pair(2)
-
     curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
     YELLOW = curses.color_pair(3)
-
     curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_BLUE)
     BLUESQUARE = curses.color_pair(4)
-
+          
     stdscr.clear()
     
     score = 0
-    stdscr.addstr("Score: ")
+    stdscr.addstr("Score: ", curses.A_BOLD)
     stdscr.addstr(0, 7, str(score), YELLOW)
+    stdscr.addstr(0, 22, "@benmcca", curses.A_BOLD)
     stdscr.addstr(1, 0, "------------------------------")
     stdscr.addstr(2, 14, "  ", REDSQUARE)
     
@@ -36,7 +33,7 @@ def main(stdscr):
 
         while back == False:
             if i == 30:
-                back = True  
+                back = True
                 break 
 
             stdscr.addstr(row, i, "  ", REDSQUARE)
@@ -55,10 +52,14 @@ def main(stdscr):
                     row += 1
                 else:
                     stdscr.addstr(row, i - 2, "  ", BLUESQUARE)
-                    play = False
-                    break
+                    stdscr.addstr(row + 1, 14, str(score), YELLOW)
+                    stdscr.addstr(row + 2, 10, "PLAY AGAIN")
+                    stdscr.refresh()
+                    play = False 
+                    time.sleep(1.5)
+                    wrapper(main)                                                        
    
-        
+                  
         while back == True:
             if i == 2:
                 back = False
@@ -80,14 +81,13 @@ def main(stdscr):
                     row += 1       
                 else:
                     stdscr.addstr(row, i - 2, "  ", BLUESQUARE)
+                    stdscr.addstr(row + 1, 14, str(score), YELLOW)
+                    stdscr.addstr(row + 2, 10, "PLAY AGAIN")
+                    stdscr.refresh()
                     play = False 
-                    break    
-    
-    if keyboard.is_pressed('q'):
-        wrapper(main)      
-
-    stdscr.getch()   
+                    time.sleep(1.5)
+                    wrapper(main)
+                    
+    stdscr.getch()              
      
-
-wrapper(main)
-                                     
+wrapper(main)          
