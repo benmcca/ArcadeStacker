@@ -4,6 +4,8 @@ import time
 import keyboard
 
 def main(stdscr):
+
+    #INITIALIZE COLORS
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
     REDSQUARE = curses.color_pair(1)
     curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_BLACK)
@@ -15,6 +17,7 @@ def main(stdscr):
           
     stdscr.clear()
     
+    #Print score on top as well as initialize first square
     score = 0
     stdscr.addstr("Score: ", curses.A_BOLD)
     stdscr.addstr(0, 7, str(score), YELLOW)
@@ -22,7 +25,7 @@ def main(stdscr):
     stdscr.addstr(1, 0, "------------------------------")
     stdscr.addstr(2, 14, "  ", REDSQUARE)
     
-    i = 2    
+    i = 2  
     row = 3
     back = False
     speed = 0.15
@@ -31,11 +34,14 @@ def main(stdscr):
 
     while play:
 
+        #GOING FORWARD
+        #Change to go backward if i = 30 (end of game window)
         while back == False:
             if i == 30:
                 back = True
                 break 
 
+            #Print red square and delete the previous space behind it.
             stdscr.addstr(row, i, "  ", REDSQUARE)
             stdscr.refresh()
             stdscr.addstr(row, i - 2, "  ", BLACKSQUARE)
@@ -43,13 +49,18 @@ def main(stdscr):
             time.sleep(speed)
             i += 2
 
+            #if space is pressed then stop square and move to the next row
             if keyboard.is_pressed(' '):
+                #if stopped on i = 16 then that means it stacked onto right column
+                #if successfully stopped on previous square, increase
                 if i == 16:
                     score += 1
                     stdscr.addstr(0, 7, str(score), YELLOW)
                     time.sleep(0.1)
                     speed *= increase
                     row += 1
+                #if not stopped on the right square then print Blue square for incorrect spot
+                #Print score and play again after 1.5 seconds
                 else:
                     stdscr.addstr(row, i - 2, "  ", BLUESQUARE)
                     stdscr.addstr(row + 1, 14, str(score), YELLOW)
@@ -59,7 +70,8 @@ def main(stdscr):
                     time.sleep(1.5)
                     wrapper(main)                                                        
    
-                  
+
+        #THIS is a duplicate of previous loop except it runs for when the square is moving backwards      
         while back == True:
             if i == 2:
                 back = False
@@ -90,4 +102,4 @@ def main(stdscr):
                     
     stdscr.getch()              
      
-wrapper(main)          
+wrapper(main)                                
