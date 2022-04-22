@@ -1,5 +1,6 @@
 import curses
 from curses import wrapper
+from curses.textpad import rectangle
 import time
 import keyboard
 
@@ -24,6 +25,8 @@ def main(stdscr):
     stdscr.addstr(0, 22, "@benmcca", curses.A_BOLD)
     stdscr.addstr(1, 0, "------------------------------")
     stdscr.addstr(2, 14, "  ", REDSQUARE)
+    rectangle(stdscr, 1, 0, 20, 30)
+    stdscr.refresh()
     
     i = 2  
     row = 3
@@ -45,6 +48,7 @@ def main(stdscr):
             stdscr.addstr(row, i, "  ", REDSQUARE)
             stdscr.refresh()
             stdscr.addstr(row, i - 2, "  ", BLACKSQUARE)
+            rectangle(stdscr, 1, 0, 20, 30)
             stdscr.refresh()
             time.sleep(speed)
             i += 2
@@ -81,6 +85,7 @@ def main(stdscr):
             stdscr.addstr(row, i - 2, "  ", REDSQUARE)
             stdscr.refresh()
             stdscr.addstr(row, i, "  ", BLACKSQUARE)
+            rectangle(stdscr, 1, 0, 20, 30)
             stdscr.refresh()
             time.sleep(speed)
 
