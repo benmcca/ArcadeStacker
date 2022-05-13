@@ -5,6 +5,8 @@ import time
 import keyboard
 
 def main(stdscr):
+    #Make cursor invisible
+    curses.curs_set(0)
 
     #INITIALIZE COLORS
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
@@ -90,7 +92,7 @@ def main(stdscr):
             time.sleep(speed)
 
             if keyboard.is_pressed(' '): 
-                if i == 16:
+                if i == 16:                                      
                     score += 1
                     stdscr.addstr(0, 7, str(score), YELLOW)               
                     time.sleep(0.1)
